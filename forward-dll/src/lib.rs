@@ -299,11 +299,9 @@ fn forward_dll_impl(dll_path: &str, exports: &[ExportItem]) -> Result<(), String
     for ExportItem { name, ordinal } in exports {
         match name {
             Some(name) => {
-                if name != "DllMain" {
-                    println!(
-                        "cargo:rustc-link-arg=/EXPORT:{name}={dll_path_without_ext}.{name},@{ordinal}"
-                    )
-                }
+                println!(
+                    "cargo:rustc-link-arg=/EXPORT:{name}={dll_path_without_ext}.{name},@{ordinal}"
+                )
             }
             None => {
                 anonymous_name_id += 1;
