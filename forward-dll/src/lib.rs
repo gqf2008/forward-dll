@@ -142,7 +142,7 @@ macro_rules! define_function {
             }
 
             #[no_mangle]
-            pub extern "system" fn $export_name() -> u32 {
+            pub extern "system" fn $proc() -> u32 {
                 #[cfg(target_arch = "x86")]
                 unsafe {
                     std::arch::asm!(

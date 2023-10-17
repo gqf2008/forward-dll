@@ -49,7 +49,7 @@ pub fn derive_forward_module(item: TokenStream) -> TokenStream {
     let export_names: Vec<_> = exports.iter().map(|(_, fn_name)| fn_name).collect();
     let export_idents: Vec<_> = exports
         .iter()
-        .map(|(_, fn_name)| format_ident!("{fn_name}"))
+        .map(|(_, fn_name)| format_ident!("{}", fn_name.replace("@", "_")))
         .collect();
     let export_count = exports.len();
     let struct_name = input.ident;
