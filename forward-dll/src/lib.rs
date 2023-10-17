@@ -298,9 +298,13 @@ fn forward_dll_impl(dll_path: &str, exports: &[ExportItem]) -> Result<(), String
     // 输出链接参数，转发入口点到目标库。
     for ExportItem { name, ordinal } in exports {
         match name {
-            Some(name) => println!(
-                "cargo:rustc-link-arg=/EXPORT:{name}={dll_path_without_ext}.{name},@{ordinal}"
-            ),
+            Some(name) => {
+                if name != "DllMain" {
+                    println!(
+                        "cargo:rustc-link-arg=/EXPORT:{name}={dll_path_without_ext}.{name},@{ordinal}"
+                    )
+                }
+            }
             None => {
                 anonymous_name_id += 1;
                 let fn_name = format!("forward_dll_anonymous_{anonymous_name_id}");
